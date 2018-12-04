@@ -1,0 +1,47 @@
+<div class="container">
+
+  <mdb-card>
+    <mdb-card-body>
+
+      <!--Title-->
+      <div class="row">
+        <div class="col-md-9">
+          <mdb-card-title>
+            <h4><strong><i class="fa fa-desktop"></i> &nbsp;Listado de clientes</strong></h4>
+          </mdb-card-title>
+        </div>
+        <!-- Insertar Cliente -->
+        <div class="col-md-3">
+          <a mdbBtn [routerLink]="['/clientes/form']" role="button" color="indigo" mdbWavesEffect>
+            <mdb-icon icon="magic" class="mr-1"></mdb-icon>Crear Cliente
+          </a>
+        </div>
+
+      </div>
+
+      <table mdbTable striped="true">
+        <thead>
+          <tr>
+            <th scope="col">id</th>
+            <th scope="col">nombre</th>
+            <th scope="col">apellido</th>
+            <th scope="col">email</th>
+            <th scope="col">fecha</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr mdbTableCol *ngFor="let cliente of clientes">
+            <th scope="row">{{cliente.id}}</th>
+            <td>{{cliente.nombre}}</td>
+            <td>{{cliente.apellido}}</td>
+            <td>{{cliente.email}}</td>
+            <td>{{cliente.createAt}}</td>
+          </tr>
+        </tbody>
+      </table>
+
+    </mdb-card-body>
+  </mdb-card>
+
+
+</div>
