@@ -36,6 +36,12 @@
             <td>{{cliente.apellido}}</td>
             <td>{{cliente.email}}</td>
             <td>{{cliente.createAt}}</td>
+            <td>
+              <a type="button" name="editar" mdbBtn size="sm" color="elegant" [routerLink]="['/clientes/form', cliente.id]" mdbWavesEffect>editar</a>
+            </td>
+            <td>
+              <a type="button" name="eliminar" mdbBtn size="sm" color="danger" (click)="delete(cliente)" mdbWavesEffect>Eliminar</a>
+            </td>
           </tr>
         </tbody>
       </table>

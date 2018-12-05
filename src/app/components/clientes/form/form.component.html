@@ -7,7 +7,7 @@
         <h4>{{titulo}}</h4>
       </mdb-card-title>
 
-      <form (ngSubmit)="create()">
+      <form>
 
         <!-- Grid row -->
         <div class="form-row">
@@ -45,8 +45,11 @@
 
         </div>
 
-        <button type="submit" mdbBtn color="elegant" mdbWavesEffect role="button">Crear</button>
+        <button type="submit" mdbBtn color="elegant" mdbWavesEffect role="button" (click)="create()" *ngIf="!cliente.id else elseBlock">Crear</button>
 
+        <ng-template #elseBlock>
+            <button type="submit" mdbBtn color="elegant" mdbWavesEffect role="button" (click)="update()">Editar</button>
+        </ng-template>
 
       </form>
 

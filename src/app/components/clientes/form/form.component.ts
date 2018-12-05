@@ -1,5 +1,8 @@
+import { ClienteService } from './../../../services/cliente.service';
 import { Cliente } from 'src/app/model/cliente';
 import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
+import swal from 'sweetalert2';
 
 @Component({
   selector: 'app-form',
@@ -11,15 +14,50 @@ export class FormComponent implements OnInit {
   private titulo: string = "Crear Cliente"
 
 
-  constructor() {
+  constructor(private _clienteService: ClienteService, private _router: Router, private _activatedRoute: ActivatedRoute) {
   }
 
   ngOnInit() {
+    this.cargarCliente();
   }
 
   public create(): void{
-    console.log("chekado")
-    console.log(this.cliente);
+    this._clienteService.create(this.cliente).subscribe(
+      response => {
+        this._router.navigate(['/clientes']);
+        swal('Nuevo cliente', `Cliente ${response.nombre} creado con éxito`, 'success');
+      },
+      error =>{
+        swal('Nuevo cliente', `Ha ocurrido un error al crear el cliente`, 'warning');
+        console.log(error);
+      }
+    )
+  }
+
+  public cargarCliente(): void{
+    this._activatedRoute.params.subscribe(params => {
+      let id = params['id'];
+      if(id){
+        this._clienteService.getCliente(id).subscribe(
+          response => {
+            this.cliente = response
+          }
+        )
+      }
+    })
+  }
+
+  public update(): void{
+    this._clienteService.update(this.cliente).subscribe(
+      response => {
+        this._router.navigate(['/clientes']);
+        swal('Cliente Actualizado', `Cliente ${response.nombre} actualizado con éxito`, 'success');
+      },
+      error =>{
+        swal('Cliente Actualizado', `Ha ocurrido un error al crear el cliente`, 'warning');
+        console.log(error);
+      }
+    )
   }
 
 }
