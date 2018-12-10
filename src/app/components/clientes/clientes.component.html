@@ -18,8 +18,10 @@
         </div>
 
       </div>
-
-      <table mdbTable striped="true">
+      <div *ngIf="clientes?.length == 0" class="alert alert-info" [ngStyle]="{'margin-top': '3%'}">
+        No hay registros en la base de datos
+      </div>
+      <table mdbTable striped="true" *ngIf="clientes?.length>0">
         <thead>
           <tr>
             <th scope="col">id</th>
