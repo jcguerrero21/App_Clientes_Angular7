@@ -1,0 +1,24 @@
+<ul class="pagination pagination-circle pg-dark" *ngIf="paginas?.length > 0">
+  <li class="page-item" [ngClass]="paginador.first? 'disabled page-item':''"><a class="page-link" [routerLink]="['/clientes/page', 0]"
+      mdbWavesEffect>Primera</a></li>
+  <li class="page-item" *ngIf="paginador.number > 0">
+    <a class="page-link" [routerLink]="['/clientes/page', paginador.number-1]" aria-label="Previous" mdbWavesEffect>
+      <span>&laquo;</span>
+    </a>
+  </li>
+  <div *ngFor="let pagina of paginas">
+    <li class="page-item" [ngClass]="pagina-1 == paginador.number?'active':''">
+      <a class="page-link" [routerLink]="['/clientes/page', pagina-1]" mdbWavesEffect>
+        {{pagina}}
+      </a>
+    </li>
+
+  </div>
+  <li class="page-item" *ngIf="paginador.number < paginador.totalPages-1">
+    <a class="page-link" [routerLink]="['/clientes/page', paginador.number+1]" aria-label="Next" mdbWavesEffect>
+      <span>&raquo;</span>
+    </a>
+  </li>
+  <li class="page-item" [ngClass]="paginador.last? 'disabled page-item':''"><a class="page-link" [routerLink]="['/clientes/page', paginador.totalPages-1]"
+      mdbWavesEffect>Última</a></li>
+</ul>

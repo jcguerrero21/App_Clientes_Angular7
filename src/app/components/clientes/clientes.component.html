@@ -35,9 +35,9 @@
           <tr mdbTableCol *ngFor="let cliente of clientes">
             <th scope="row">{{cliente.id}}</th>
             <td>{{cliente.nombre}}</td>
-            <td>{{cliente.apellido}}</td>
+            <td>{{cliente.apellido | uppercase}}</td>
             <td>{{cliente.email}}</td>
-            <td>{{cliente.createAt}}</td>
+            <td>{{cliente.createAt | date:"EEEE dd, MMMM yyyy"}}</td>
             <td>
               <a type="button" name="editar" mdbBtn size="sm" color="elegant" [routerLink]="['/clientes/form', cliente.id]" mdbWavesEffect>editar</a>
             </td>
@@ -47,7 +47,7 @@
           </tr>
         </tbody>
       </table>
-
+      <paginator-nav *ngIf="paginador" [urlPagina]="page" [paginador]="paginador"></paginator-nav>
     </mdb-card-body>
   </mdb-card>
 
