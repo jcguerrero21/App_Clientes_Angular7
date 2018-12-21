@@ -1,4 +1,5 @@
 <div class="container">
+  <detalle-cliente *ngIf="clienteSeleccionado" [cliente]="clienteSeleccionado"></detalle-cliente>
 
   <mdb-card>
     <mdb-card-body>
@@ -33,13 +34,17 @@
         </thead>
         <tbody>
           <tr mdbTableCol *ngFor="let cliente of clientes">
-            <th scope="row">{{cliente.id}}</th>
+            <td><img *ngIf="cliente?.foto" src="http://localhost:8080/api/uploads/img/{{cliente.foto}}" alt="{{cliente.foto}}"
+                class="img-thumbnail rounded" (click)="abrirModal(cliente)" style="width:64px;cursor:pointer;">
+                <img *ngIf="!cliente?.foto" src="http://localhost:8080/images/no-usuario.png" alt="sin foto"
+                class="img-thumbnail rounded" (click)="abrirModal(cliente)" style="width:64px;cursor:pointer;"></td>
             <td>{{cliente.nombre}}</td>
             <td>{{cliente.apellido | uppercase}}</td>
             <td>{{cliente.email}}</td>
             <td>{{cliente.createAt | date:"EEEE dd, MMMM yyyy"}}</td>
             <td>
-              <a type="button" name="editar" mdbBtn size="sm" color="elegant" [routerLink]="['/clientes/form', cliente.id]" mdbWavesEffect>editar</a>
+              <a type="button" name="editar" mdbBtn size="sm" color="elegant" [routerLink]="['/clientes/form', cliente.id]"
+                mdbWavesEffect>editar</a>
             </td>
             <td>
               <a type="button" name="eliminar" mdbBtn size="sm" color="danger" (click)="delete(cliente)" mdbWavesEffect>Eliminar</a>
