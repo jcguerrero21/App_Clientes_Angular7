@@ -3,6 +3,7 @@ import { Cliente } from 'src/app/model/cliente';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import swal from 'sweetalert2';
+import { Region } from '../../../model/region';
 
 @Component({
   selector: 'app-form',
@@ -11,6 +12,7 @@ import swal from 'sweetalert2';
 export class FormComponent implements OnInit {
 
   private cliente: Cliente = new Cliente();
+  regiones: Region[];
   private titulo: string = "Crear Cliente"
   private hayCambio: boolean = false;
   private errores: String[];
@@ -20,15 +22,16 @@ export class FormComponent implements OnInit {
 
   ngOnInit() {
     this.cargarCliente();
+    this.cargarRegiones();
   }
 
-  public create(): void{
+  public create(): void {
     this._clienteService.create(this.cliente).subscribe(
       response => {
         this._router.navigate(['/clientes']);
         swal('Nuevo cliente', `El cliente ${response.nombre} ha sido creado con exito`, 'success');
       },
-      error =>{
+      error => {
         this.errores = error.error.errors as string[];
         console.error("Código del error desde el backend: " + error.status);
         console.log(error.error.errors);
@@ -38,10 +41,10 @@ export class FormComponent implements OnInit {
     );
   }
 
-  public cargarCliente(): void{
+  public cargarCliente(): void {
     this._activatedRoute.params.subscribe(params => {
       let id = params['id'];
-      if(id){
+      if (id) {
         this._clienteService.getCliente(id).subscribe(
           response => {
             this.cliente = response
@@ -51,13 +54,20 @@ export class FormComponent implements OnInit {
     })
   }
 
-  public update(): void{
+  public cargarRegiones(): void {
+    this._clienteService.getRegiones().subscribe(
+      regiones => {
+        this.regiones = regiones;
+      })
+  }
+
+  public update(): void {
     this._clienteService.update(this.cliente).subscribe(
       response => {
         this._router.navigate(['/clientes']);
         swal('Cliente Actualizado', `${response.cliente.nombre}`, 'success');
       },
-      error =>{
+      error => {
         this.errores = error.error.errors as string[];
         console.error("Código del error desde el backend: " + error.status);
         console.log(error.error.errors);
@@ -67,8 +77,15 @@ export class FormComponent implements OnInit {
     )
   }
 
-  onChange(event){
+  onChange(event) {
     this.hayCambio = true;
+  }
+
+  compararRegion(o1: Region, o2: Region): boolean  { //para que siempre nos marque el select de un multselect al editar
+    if(o1 === undefined && o2 === undefined){
+      return true;
+    }
+    return o1 === null || o2 === null || o1 === undefined || o2 === undefined ? false : o1.id === o2.id;
   }
 
 }

@@ -3,7 +3,7 @@ import { ClienteService } from './../../services/cliente.service';
 import { Component, OnInit } from '@angular/core';
 import { Cliente } from 'src/app/model/cliente';
 import swal from 'sweetalert2';
-import { tap } from 'rxjs/operators';
+import { tap, map } from 'rxjs/operators';
 import { ModalService } from 'src/app/services/modal.service';
 
 @Component({
@@ -17,11 +17,12 @@ export class ClientesComponent implements OnInit {
   paginador: any;
   page: number;
   clienteSeleccionado: Cliente;
-  
+
   constructor(private _clienteService: ClienteService, private _activatedRoute: ActivatedRoute, private _modalService: ModalService) { }
 
   ngOnInit() {
     this.getClientes();
+    this.actualizarFotoListadoAutomatic();
   }
 
   public getClientes(): void {
@@ -41,7 +42,7 @@ export class ClientesComponent implements OnInit {
           })
         ).subscribe(response => {
           this.clientes = response.content as Cliente[],
-          this.paginador = response;
+            this.paginador = response;
         });
     });
   }
@@ -60,7 +61,11 @@ export class ClientesComponent implements OnInit {
       if (result.value) {
         this._clienteService.delete(cliente.id).subscribe(
           () => {
-            this.clientes = this.clientes.filter(cli => cli !== cliente) //con esto cada vez que se eliminemos uno nos recarga el listado autamaticamente sin tener que lanzar otra petición ajax al servidor
+            this._clienteService.getClientes(0).subscribe(response => {
+              this.clientes = response.content as Cliente[];
+              this.paginador = response;
+            }); //con esto cada vez que se eliminemos uno nos recarga el listado autamaticamente sin tener que lanzar otra petición ajax al servidor
+            //this.clientes = this.clientes.filter(cli => cli !== cliente) //con esto cada vez que se eliminemos uno nos recarga el listado autamaticamente sin tener que lanzar otra petición ajax al servidor
             swal(
               'Cliente Elimiado',
               `Cliente ${cliente.nombre} eliminado con éxito`,
@@ -75,6 +80,17 @@ export class ClientesComponent implements OnInit {
   abrirModal(cliente: Cliente){
     this.clienteSeleccionado = cliente;
     this._modalService.abrirModal();
+  }
+
+  actualizarFotoListadoAutomatic(){
+    this._modalService.notificarUpload.subscribe(cliente => {
+      this.clientes = this.clientes.map(clienteOriginal => {
+        if (cliente.id == clienteOriginal.id) {
+          clienteOriginal.foto = cliente.foto;
+        }
+        return clienteOriginal;
+      });
+    });
   }
 
 }

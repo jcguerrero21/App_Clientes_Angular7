@@ -1,60 +1,56 @@
 <div class="container">
-  <detalle-cliente *ngIf="clienteSeleccionado" [cliente]="clienteSeleccionado"></detalle-cliente>
+    <mdb-card>
+        <detalle-cliente *ngIf="clienteSeleccionado" [cliente]="clienteSeleccionado"></detalle-cliente>
+        <mdb-card-body>
 
-  <mdb-card>
-    <mdb-card-body>
+            <!--Title-->
+            <div class="row">
+                <div class="col-md-9">
+                    <mdb-card-title>
+                        <h4><strong><i class="fa fa-desktop"></i> &nbsp;Listado de clientes</strong></h4>
+                    </mdb-card-title>
+                </div>
+                <!-- Insertar Cliente -->
+                <div class="col-md-3">
+                    <a mdbBtn [routerLink]="['/clientes/form']" role="button" color="indigo" mdbWavesEffect>
+                        <mdb-icon icon="magic" class="mr-1"></mdb-icon>Crear Cliente
+                    </a>
+                </div>
 
-      <!--Title-->
-      <div class="row">
-        <div class="col-md-9">
-          <mdb-card-title>
-            <h4><strong><i class="fa fa-desktop"></i> &nbsp;Listado de clientes</strong></h4>
-          </mdb-card-title>
-        </div>
-        <!-- Insertar Cliente -->
-        <div class="col-md-3">
-          <a mdbBtn [routerLink]="['/clientes/form']" role="button" color="indigo" mdbWavesEffect>
-            <mdb-icon icon="magic" class="mr-1"></mdb-icon>Crear Cliente
-          </a>
-        </div>
-
-      </div>
-      <div *ngIf="clientes?.length == 0" class="alert alert-info" [ngStyle]="{'margin-top': '3%'}">
-        No hay registros en la base de datos
-      </div>
-      <table mdbTable striped="true" *ngIf="clientes?.length>0">
-        <thead>
-          <tr>
-            <th scope="col">id</th>
-            <th scope="col">nombre</th>
-            <th scope="col">apellido</th>
-            <th scope="col">email</th>
-            <th scope="col">fecha</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr mdbTableCol *ngFor="let cliente of clientes">
-            <td><img *ngIf="cliente?.foto" src="http://localhost:8080/api/uploads/img/{{cliente.foto}}" alt="{{cliente.foto}}"
-                class="img-thumbnail rounded" (click)="abrirModal(cliente)" style="width:64px;cursor:pointer;">
-                <img *ngIf="!cliente?.foto" src="http://localhost:8080/images/no-usuario.png" alt="sin foto"
-                class="img-thumbnail rounded" (click)="abrirModal(cliente)" style="width:64px;cursor:pointer;"></td>
-            <td>{{cliente.nombre}}</td>
-            <td>{{cliente.apellido | uppercase}}</td>
-            <td>{{cliente.email}}</td>
-            <td>{{cliente.createAt | date:"EEEE dd, MMMM yyyy"}}</td>
-            <td>
-              <a type="button" name="editar" mdbBtn size="sm" color="elegant" [routerLink]="['/clientes/form', cliente.id]"
-                mdbWavesEffect>editar</a>
-            </td>
-            <td>
-              <a type="button" name="eliminar" mdbBtn size="sm" color="danger" (click)="delete(cliente)" mdbWavesEffect>Eliminar</a>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <paginator-nav *ngIf="paginador" [urlPagina]="page" [paginador]="paginador"></paginator-nav>
-    </mdb-card-body>
-  </mdb-card>
+            </div>
+            <div *ngIf="clientes?.length == 0" class="alert alert-info" [ngStyle]="{'margin-top': '3%'}">
+                No hay registros en la base de datos
+            </div>
+            <table mdbTable striped="true" *ngIf="clientes?.length>0">
+                <thead>
+                    <tr>
+                        <th scope="col">{{ 'perfil' | uppercase}}</th>
+                        <th scope="col">{{ 'nombre' | uppercase }}</th>
+                        <th scope="col">{{ 'apellido' | uppercase }}</th>
+                        <th scope="col">{{ 'email' | uppercase }}</th>
+                        <th scope="col">{{ 'fecha' | uppercase }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr mdbTableCol *ngFor="let cliente of clientes">
+                        <td><img *ngIf="cliente?.foto" src="http://localhost:8080/api/uploads/img/{{cliente.foto}}" alt="{{cliente.foto}}" class="img-thumbnail rounded" (click)="abrirModal(cliente)" style="width:64px;cursor:pointer;">
+                            <img *ngIf="!cliente?.foto" src="http://localhost:8080/images/no-usuario.png" alt="sin foto" class="img-thumbnail rounded" (click)="abrirModal(cliente)" style="width:64px;cursor:pointer;"></td>
+                        <td>{{cliente.nombre}}</td>
+                        <td>{{cliente.apellido | uppercase}}</td>
+                        <td>{{cliente.email}}</td>
+                        <td>{{cliente.createAt | date:"EEEE dd, MMMM yyyy"}}</td>
+                        <td>
+                            <a type="button" name="editar" mdbBtn size="sm" color="elegant" [routerLink]="['/clientes/form', cliente.id]" mdbWavesEffect>editar</a>
+                        </td>
+                        <td>
+                            <a type="button" name="eliminar" mdbBtn size="sm" color="danger" (click)="delete(cliente)" mdbWavesEffect>Eliminar</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <paginator-nav *ngIf="paginador" [urlPagina]="page" [paginador]="paginador"></paginator-nav>
+        </mdb-card-body>
+    </mdb-card>
 
 
 </div>

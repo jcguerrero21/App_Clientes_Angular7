@@ -5,6 +5,7 @@ import { Observable, of, throwError } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpRequest, HttpEvent } from '@angular/common/http';
 import { map, catchError, tap } from 'rxjs/operators';
 import swal from 'sweetalert2';
+import { Region } from '../model/region.js';
 //import { formatDate, DatePipe } from '@angular/common';
 
 
@@ -121,10 +122,10 @@ export class ClienteService {
 
   delete(id: number): Observable<Cliente> {
     return this._http.delete<Cliente>(`${this.urlEndPoint}/${id}`, { headers: this.httpHeaders }).pipe(
-      catchError(error => {
-        console.log(error.error.mensaje);
-        swal(error.error.mensaje, error.error.error, 'error');
-        return throwError(error);
+      catchError(e => {
+        console.error(e.error.mensaje);
+        swal(e.error.mensaje, e.error.error, 'error');
+        return throwError(e);
       })
     );
   }
@@ -140,6 +141,10 @@ export class ClienteService {
     });
 
     return this._http.request(req);
+  }
+
+  getRegiones(): Observable<Region[]>{
+    return this._http.get<Region[]>(this.urlEndPoint + '/regiones');
   }
 
 }
