@@ -5,6 +5,7 @@ import { Cliente } from 'src/app/model/cliente';
 import swal from 'sweetalert2';
 import { tap, map } from 'rxjs/operators';
 import { ModalService } from 'src/app/services/modal.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-clientes',
@@ -18,7 +19,7 @@ export class ClientesComponent implements OnInit {
   page: number;
   clienteSeleccionado: Cliente;
 
-  constructor(private _clienteService: ClienteService, private _activatedRoute: ActivatedRoute, private _modalService: ModalService) { }
+  constructor(private _clienteService: ClienteService, private _activatedRoute: ActivatedRoute, private _modalService: ModalService, private _authService: AuthService) { }
 
   ngOnInit() {
     this.getClientes();
@@ -77,12 +78,12 @@ export class ClientesComponent implements OnInit {
     });
   }
 
-  abrirModal(cliente: Cliente){
+  abrirModal(cliente: Cliente) {
     this.clienteSeleccionado = cliente;
     this._modalService.abrirModal();
   }
 
-  actualizarFotoListadoAutomatic(){
+  actualizarFotoListadoAutomatic() {
     this._modalService.notificarUpload.subscribe(cliente => {
       this.clientes = this.clientes.map(clienteOriginal => {
         if (cliente.id == clienteOriginal.id) {

@@ -24,8 +24,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDatepickerModule } from '@angular/material';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { DetalleComponent } from './components/clientes/detalle/detalle.component';
+import { LoginComponent } from './components/login/login.component';
+import { Interceptors } from './interceptors';
+
 
 registerLocaleData(localeEs, 'es');
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -34,7 +38,8 @@ registerLocaleData(localeEs, 'es');
     ClientesComponent,
     FormComponent,
     PaginatorComponent,
-    DetalleComponent
+    DetalleComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -49,7 +54,8 @@ registerLocaleData(localeEs, 'es');
   schemas: [NO_ERRORS_SCHEMA],
   providers: [
     ClienteService,
-    { provide: LOCALE_ID, useValue: 'es' }
+    { provide: LOCALE_ID, useValue: 'es' },
+    Interceptors
   ],
   bootstrap: [AppComponent]
 })

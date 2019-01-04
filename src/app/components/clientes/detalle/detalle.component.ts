@@ -5,6 +5,7 @@ import { ClienteService } from '../../../services/cliente.service';
 import swal from 'sweetalert2';
 import { HttpEventType } from '@angular/common/http';
 import { ModalService } from 'src/app/services/modal.service';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'detalle-cliente',
@@ -21,7 +22,8 @@ export class DetalleComponent implements OnInit {
 
   constructor(private clienteService: ClienteService,
     // private activatedRoute: ActivatedRoute,
-    private _modalService: ModalService) { }
+    private _modalService: ModalService,
+    private _authService: AuthService) { }
 
   ngOnInit() {
     // this.activatedRoute.paramMap.subscribe(params => {
