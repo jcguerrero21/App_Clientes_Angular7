@@ -24,7 +24,8 @@
             <table mdbTable striped="true" *ngIf="clientes?.length>0">
                 <thead>
                     <tr>
-                        <th *ngIf="_authService.hasRole('ROLE_USER')" scope="col">{{ 'perfil' | uppercase}}</th>
+                        <!-- <th *ngIf="_authService.hasRole('ROLE_USER')" scope="col">{{ 'perfil' | uppercase}}</th> -->
+                        <th scope="col">{{ 'perfil' | uppercase}}</th>
                         <th scope="col">{{ 'nombre' | uppercase }}</th>
                         <th scope="col">{{ 'apellido' | uppercase }}</th>
                         <th scope="col">{{ 'email' | uppercase }}</th>
@@ -33,7 +34,9 @@
                 </thead>
                 <tbody class="zoomIn">
                     <tr mdbTableCol *ngFor="let cliente of clientes">
-                        <td *ngIf="_authService.hasRole('ROLE_USER')"><img *ngIf="cliente?.foto" src="http://localhost:8080/api/uploads/img/{{cliente.foto}}" alt="{{cliente.foto}}" class="img-thumbnail rounded" (click)="abrirModal(cliente)" style="width:64px;cursor:pointer;">
+                        <!-- <td *ngIf="_authService.hasRole('ROLE_USER')"><img *ngIf="cliente?.foto" src="http://localhost:8080/api/uploads/img/{{cliente.foto}}" alt="{{cliente.foto}}" class="img-thumbnail rounded" (click)="abrirModal(cliente)" style="width:64px;cursor:pointer;">
+                            <img *ngIf="!cliente?.foto" src="http://localhost:8080/images/no-usuario.png" alt="sin foto" class="img-thumbnail rounded" (click)="abrirModal(cliente)" style="width:64px;cursor:pointer;"></td> -->
+                        <td><img *ngIf="cliente?.foto" src="http://localhost:8080/api/uploads/img/{{cliente.foto}}" alt="{{cliente.foto}}" class="img-thumbnail rounded" (click)="abrirModal(cliente)" style="width:64px;cursor:pointer;">
                             <img *ngIf="!cliente?.foto" src="http://localhost:8080/images/no-usuario.png" alt="sin foto" class="img-thumbnail rounded" (click)="abrirModal(cliente)" style="width:64px;cursor:pointer;"></td>
                         <td>{{cliente.nombre}}</td>
                         <td>{{cliente.apellido | uppercase}}</td>
