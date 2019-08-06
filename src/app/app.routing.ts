@@ -6,6 +6,7 @@ import { DetalleComponent } from './components/clientes/detalle/detalle.componen
 import { LoginComponent } from './components/login/login.component';
 import { AuthGuard } from './guards/auth.guard';
 import { RoleGuard } from './guards/role.guard';
+import { DetalleFacturaComponent } from './components/facturas/detalle-factura/detalle-factura.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/clientes', pathMatch: 'full' },
@@ -14,7 +15,8 @@ const appRoutes: Routes = [
   { path: 'clientes/page/:page', component: ClientesComponent },
   { path: 'clientes/form', component: FormComponent, canActivate: [AuthGuard, RoleGuard], data: { role: 'ROLE_ADMIN' } },
   { path: 'clientes/form/:id', component: FormComponent, canActivate: [AuthGuard, RoleGuard], data: { role: 'ROLE_ADMIN' } },
-  { path: 'login', component: LoginComponent }
+  { path: 'login', component: LoginComponent },
+  { path: 'facturas/:id', component: DetalleFacturaComponent }
 ];
 
 export const Routing: ModuleWithProviders = RouterModule.forRoot(appRoutes);
