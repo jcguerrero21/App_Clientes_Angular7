@@ -13,7 +13,7 @@ export class RoleGuard implements CanActivate {
 
   canActivate(next: ActivatedRouteSnapshot,state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
     //primero validamos si esta autenticado y si no al login
-    if (this._authService.isAuthenticated()) {
+    if (!this._authService.isAuthenticated()) {
       this._router.navigate(['/login'])
       return true;
     }

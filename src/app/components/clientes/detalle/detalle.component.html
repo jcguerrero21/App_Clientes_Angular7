@@ -43,6 +43,11 @@
                                 <img *ngIf="cliente?.foto" src="http://localhost:8080/api/uploads/img/{{cliente.foto}}" alt="{{cliente.foto}}" class="img-thumbnail rounded">
                             </div>
                         </div>
+
+                        <div class="row" *ngIf="_authService.hasRole('ROLE_ADMIN')">
+                            <button type="button" mdbBtn size="sm" color="success" [routerLink]="['/facturas/form', cliente.id]" mdbWavesEffect>Crear Factura</button>
+                        </div>
+
                         <div class="row">
 
                             <div *ngIf="cliente.facturas.length == 0" class="alert alert-info my-4">
@@ -56,6 +61,7 @@
                                         <th scope="col">{{ 'fecha' | uppercase }}</th>
                                         <th scope="col">{{ 'total' | uppercase }}</th>
                                         <th scope="col">{{ 'detalle' | uppercase }}</th>
+                                        <th *ngIf="_authService.hasRole('ROLE_ADMIN')" scope="col">{{ 'eliminar' | uppercase}}</th>
                                     </tr>
                                 </thead>
                                 <tbody class="zoomIn">
@@ -64,8 +70,8 @@
                                         <td>{{factura.descripcion}}</td>
                                         <td>{{factura.createAt}}</td>
                                         <td>{{factura.total}}</td>
-                                        <td><button mdbBtn type="button" color="elegant" outline="true" 
-                                            [routerLink]="['/facturas', factura.id]">ver</button></td>
+                                        <td><button mdbBtn type="button" color="elegant" outline="true" [routerLink]="['/facturas', factura.id]">ver</button></td>
+                                        <td *ngIf="_authService.hasRole('ROLE_ADMIN')"><button type="button" mdbBtn color="danger" outline="true" (click)="delete(factura)">eliminar</button></td>
                                     </tr>
                                 </tbody>
                             </table>

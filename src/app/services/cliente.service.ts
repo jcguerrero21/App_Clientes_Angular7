@@ -84,9 +84,9 @@ export class ClienteService {
   getClientes(page: number): Observable<any> {
     return this._http.get(this.urlEndPoint + '/page/' + page).pipe(
       tap((response: any) => {
-        console.log('ClienteService: tap1');
+        // console.log('ClienteService: tap1');
         (response.content as Cliente[]).forEach(cliente => {
-          console.log(cliente.nombre);
+          // console.log(cliente.nombre);
         })
       }),
       map((response: any) => {
@@ -99,9 +99,9 @@ export class ClienteService {
         return response;
       }),
       tap(response => {
-        console.log('ClienteService: tap2');
+        // console.log('ClienteService: tap2');
         (response.content as Cliente[]).forEach(cliente => {
-          console.log(cliente.nombre);
+          // console.log(cliente.nombre);
         })
       })
     );

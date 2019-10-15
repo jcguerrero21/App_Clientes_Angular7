@@ -2,9 +2,9 @@ import { ClienteService } from './services/cliente.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, NO_ERRORS_SCHEMA, LOCALE_ID } from '@angular/core';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Routing } from './app.routing';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 
 //Components
 import { AppComponent } from './app.component';
@@ -27,6 +27,12 @@ import { DetalleComponent } from './components/clientes/detalle/detalle.componen
 import { LoginComponent } from './components/login/login.component';
 import { Interceptors } from './interceptors';
 import { DetalleFacturaComponent } from './components/facturas/detalle-factura/detalle-factura.component';
+import { FacturaComponent } from './components/facturas/factura/factura.component';
+
+//Angular Material AutoComplete
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 
 registerLocaleData(localeEs, 'es');
@@ -41,7 +47,8 @@ registerLocaleData(localeEs, 'es');
     PaginatorComponent,
     DetalleComponent,
     LoginComponent,
-    DetalleFacturaComponent
+    DetalleFacturaComponent,
+    FacturaComponent
   ],
   imports: [
     BrowserModule,
@@ -51,7 +58,12 @@ registerLocaleData(localeEs, 'es');
     FormsModule,
     BrowserAnimationsModule,
     MatDatepickerModule,
-    MatMomentDateModule
+    MatMomentDateModule,
+    ReactiveFormsModule,
+    MatAutocompleteModule,
+    MatInputModule,
+    MatFormFieldModule,
+    RouterModule
   ],
   schemas: [NO_ERRORS_SCHEMA],
   providers: [
